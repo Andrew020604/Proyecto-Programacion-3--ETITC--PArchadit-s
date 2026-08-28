@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parchadit@s</title>
+  <link rel="stylesheet" href="algomelo.css">
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <h1 class="Princi">PARCHADIT@S</h1>
+      <img src="Imagenes/img000.jpg" alt="Logo Parchando">      
+    </div>
+    <nav>
+      <button id="btnUsuario" class="btn-usuario">👤 Iniciar sesión</button>
+      <button>Para ti</button>
+      <button>Explorar - Cerca de ti</button>
+    </nav>
+  </header>
+
+  <nav class=" categories grid">
+    <button class="chip" data-categoria="todos">Todos</button>
+    <button class="chip" data-categoria="al aire libre">Al Aire Libre</button>
+    <button class="chip" data-categoria="conciertos">Conciertos</button>
+    <button class="chip" data-categoria="deportes">Deportes</button>
+    <button class="chip" data-categoria="severa gurbia">Severa Gurbia</button>
+    <button class="chip" data-categoria="dominguero">Dominguero</button>
+    <button class="chip" data-categoria="zonas sociales">Zona Sociales</button>
+    <button class="chip" data-categoria="vamos pa la fiesta">Vamos pa la fiesta</button>
+    <button class="chip" data-categoria="ja ja ja">JA JA JA</button>
+    <button class="chip" data-categoria="cine teatro">Cine/Teatro</button>
+    <button class="chip" data-categoria="eventos cercanos">Eventos Cercanos</button>
+    <button class="chip" data-categoria="museos">Museos</button>
+    <button class="chip" data-categoria="pa comer helado">Pa Comer Helado</button>
+    <button class="chip" data-categoria="sal de esa rutina">Sal De Esa Rutina</button>
+    <button class="chip" data-categoria="ferias/expocisiones">Ferias/Expocisiones</button>
+  </nav>
+  <main class="feed">
+
+ 
+  </main>
+  <div class = "overlay-crear" id="overlayCrear">
+    <section class="crear-evento">
+    <button type ="button" id="btnCerrarCrear" class="btn-cerrar">X</button>
+    <h2>Crea tu parche</h2>
+    <form id="formEvento">
+      <input type="text" id="fTitulo" placeholder="Título del evento" required>
+
+      <select id="fCategoria">
+        <option value="deportes">Deportes</option>
+        <option value="conciertos">Conciertos</option>
+        <option value="al aire libre">Al Aire Libre</option>
+        <option value="severa gurbia">Severa Gurbia</option>
+        <option value="dominguero">Dominguero</option>
+        <option value="zonas sociales">Zonas Sociales</option>
+        <option value="vamos pa la fiesta">Vamos pa la fiesta</option>
+        <option value="ja ja ja">JA JA JA</option>
+        <option value="cine teatro">Cine/Teatro</option>
+        <option value="museos">Museos</option>
+        <option value="pa comer helado">Pa comer Helado</option>
+        <option value="sal de esa rutina">Sal de esa rutina</option>
+        <option value="ferias/expocisiones">Ferias/Expocisiones</option>
+        <option value="eventos cercanos">eventos cercanos</option>
+      </select>
+
+      <input type="text" id="fUbicacion" placeholder="Ubicación" required>
+      <input type="text" id="fDescripcion" placeholder="Descripcion" required>
+      <input type="number" id="fCupos" placeholder="Cupos totales" optional>
+
+      <button type="submit">Publicar</button>
+      </form>   
+    </section> 
+      </div>
+<button id="btnCrearEvento" class="fab">+</button>
+  
+<section class="auth">
+  <div class="auth-tabs">
+    <button type="button" class="auth-tab active" data-modo="login">Iniciar sesión</button>
+    <button type="button" class="auth-tab" data-modo="registro">Registrarme</button>
+  </div>
+
+  <form id="formAuth">
+    <input type="text" id="aNombre" placeholder="Nombre" style="display:none;">
+    <input type="text" id="aCorreo" placeholder="Correo" required>
+    <input type="password" id="aContrasena" placeholder="Contraseña" required>
+    <button type="submit" id="btnAuthSubmit">Iniciar sesión</button>
+  </form>
+</section>
+
+
+
+  
+    <footer id="card">PARCHADIT@S<br>By: Ivan Gonzalez S6B</footer>
+    <script src="colosal.js"></script>
+</body>
+</html>
