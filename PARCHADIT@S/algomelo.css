@@ -1,0 +1,393 @@
+/*Colores generales de la pagina*/
+:root {
+  --bg: #0f0a1a;
+  --surface: #1c1430;
+  --text: #f5f0fa;
+  --text-muted: #b8a9d9;
+  --rosa: #ff4fa3;
+  --morado: #9b5de5;
+  --borde: #2e2447;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Princi {
+  font-family: 'Pacifico', cursive;
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  background: linear-gradient(90deg, var(--rosa), var(--morado));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header nav button {
+  background: var(--surface);
+  border: 1px solid var(--borde);
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+header nav button:hover {
+  border-color: var(--rosa);
+  color: var(--text);
+}
+
+/*Categorias y chips*/
+.categories {
+  display: flex;
+  gap: 10px;
+  padding: 30px 16px 10px;
+  overflow-x: auto;
+}
+
+.chip {
+  font-family: inherit;
+  padding: 8px 16px;
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  background: var(--surface);
+  cursor: pointer;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+
+.chip:hover {
+  border-color: var(--rosa);
+  color: var(--text);
+}
+
+.chip.active {
+  background: linear-gradient(135deg, var(--rosa), var(--morado));
+  border-color: transparent;
+  color: white;
+}
+
+/* Feed */
+.feed {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 10px 16px 100px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.card {
+  padding: 18px;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background-color: var(--surface);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--rosa);
+}
+
+.card-title {
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.card-meta {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.card-cupos {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--morado);
+}
+
+/* Comentarios dentro de la card */
+.comentarios {
+  margin: 10px 0;
+}
+
+.comentario {
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--bg);
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+
+.agregar-comentario {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.input-comentario {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 8px;
+  color: var(--text);
+}
+
+.btn-comentar {
+  background: var(--morado);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-comentar:hover {
+  background: var(--rosa);
+}
+
+/* ============================================
+   BOTÓN LIKE
+   ============================================ */
+.btn-like {
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  padding: 8px 15px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-like:hover {
+  background-color: var(--rosa);
+  border-color: var(--rosa);
+}
+
+/* Form Crear Evento*/
+.crear-evento {
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 20px;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background-color: var(--surface);
+}
+
+.crear-evento h2 {
+  margin-top: 0;
+}
+
+.crear-evento input,
+.crear-evento select,
+.crear-evento button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--borde);
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+}
+
+.crear-evento input:focus,
+.crear-evento select:focus {
+  outline: none;
+  border-color: var(--rosa);
+}
+
+.crear-evento button[type="submit"] {
+  background: linear-gradient(135deg, var(--rosa), var(--morado));
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s ease;
+}
+
+.crear-evento button[type="submit"]:hover {
+  opacity: 0.9;
+}
+
+/*Boton crear*/
+.fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--rosa), var(--morado));
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(255, 79, 163, 0.4);
+  transition: transform 0.2s ease;
+  z-index: 50;
+}
+
+.fab:hover {
+  transform: scale(1.08);
+}
+
+/*Overlay*/
+.overlay-crear {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.overlay-crear .crear-evento {
+  position: relative;
+  width: 90%;
+}
+
+.btn-cerrar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.btn-cerrar:hover {
+  color: var(--rosa);
+}
+
+/*Registro/Ingreso */
+.auth {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background-color: var(--surface);
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 10px;
+  background: var(--bg);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.auth-tab.active {
+  background: linear-gradient(135deg, var(--rosa), var(--morado));
+  color: white;
+  border-color: transparent;
+}
+
+.btn-usuario {
+  background: var(--surface);
+  border: 1px solid var(--borde);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-usuario:hover {
+  border-color: var(--rosa);
+}
+.auth form input {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--borde);
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+}
+
+.auth form input:focus {
+  outline: none;
+  border-color: var(--rosa);
+}
+
+.auth form button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, var(--rosa), var(--morado));
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.auth form button[type="submit"]:hover {
+  opacity: 0.9;
+}
+/*Footer*/
+footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--borde);
+  margin-top: 20px;
+}
