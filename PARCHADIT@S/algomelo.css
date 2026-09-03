@@ -165,6 +165,7 @@ header nav button:hover {
 
 .input-comentario {
   flex: 1;
+  min-width: 0;
   background: var(--bg);
   border: 1px solid var(--borde);
   border-radius: 8px;
@@ -251,6 +252,42 @@ header nav button:hover {
 .crear-evento button[type="submit"]:hover {
   opacity: 0.9;
 }
+.label-intereses {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 12px 0 8px;
+}
+
+.chips-intereses {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.chips-intereses label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.chips-intereses label:hover {
+  border-color: var(--rosa);
+}
+
+.chips-intereses input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--rosa);
+  cursor: pointer;
+}
 
 /*Boton crear*/
 .fab {
@@ -294,15 +331,32 @@ header nav button:hover {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: none;
-  border: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--borde);
+  border-radius: 50%;
   color: var(--text-muted);
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .btn-cerrar:hover {
   color: var(--rosa);
+  border-color: var(--rosa);
+  
+}
+.crear-evento .btn-cerrar {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*Registro/Ingreso */
@@ -382,6 +436,81 @@ header nav button:hover {
 
 .auth form button[type="submit"]:hover {
   opacity: 0.9;
+}
+/* Toast*/
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 200;
+}
+
+.toast {
+  background: var(--surface);
+  border: 1px solid var(--borde);
+  border-left: 4px solid var(--rosa);
+  color: var(--text);
+  padding: 12px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.mostrar {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.error {
+  border-left-color: #ff4d4d;
+}
+/* ============================================
+   TABS "PARA TI" / "EXPLORAR"
+   ============================================ */
+nav:has(#btnParaTi) {
+  display: flex;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--borde);
+}
+
+#btnParaTi,
+#btnExplorar {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 8px 4px;
+  cursor: pointer;
+  position: relative;
+  transition: 0.2s ease;
+}
+
+#btnParaTi:hover,
+#btnExplorar:hover {
+  color: var(--text);
+}
+
+.activar-feed {
+  color: var(--text) !important;
+}
+
+.activar-feed::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rosa), var(--morado));
+  border-radius: 3px;
 }
 /*Footer*/
 footer {

@@ -1,6 +1,6 @@
 //Constructores
 class Evento {
-  constructor(Titulo, Categoria, Ubicacion, Descripcion, CuposTotales) {
+  constructor(Titulo, Categoria, Ubicacion, Descripcion, CuposTotales, CreadoPor) {
     this.Titulo = Titulo;
     this.Categoria = Categoria;
     this.Ubicacion = Ubicacion;
@@ -9,13 +9,32 @@ class Evento {
     this.CuposOcupados = 0;
     this.likes = 0;
     this.comentarios = [];
+    this.likesUsuarios= [];
+    this.asistentes = [];
+    this.CreadoPor = CreadoPor;
   }
 
-  DarLike() {
-    this.likes++; //Aumenta los likes.
+DarLike(correo) {
+    if (this.likesUsuarios.includes(correo)) {
+      return false;   // ya había dado like
+    }
+    this.likes++;
+    this.likesUsuarios.push(correo);
+    return true;
+  }
+
+  unirse(correo) {
+    if (this.asistentes.includes(correo)) {
+      return 'ya_unido';   // ya estaba adentro
+    }
+    if (this.CuposOcupados < this.CuposTotales) {
+      this.CuposOcupados++;
+      this.asistentes.push(correo);
+      return true;
+    }
+    return false;   // no hay cupo
   }
 }
-
 class Usuario {
   constructor(nombre, correo, contrasena) {
     this.nombre = nombre;
@@ -33,6 +52,87 @@ const usuarios = [];
 let usuarioActual = null;
 let modoAuth = "login";
 
+let modofeed="explorar";
+
+const btnParaTi = document.getElementById('btnParaTi');
+const btnExplorar = document.getElementById('btnExplorar');
+
+btnParaTi.addEventListener('click',function(){
+  if(!usuarioActual){
+    mostrarToast('Inicia Sesión para continuar', 'error');
+    return;
+  }
+
+  modofeed="para ti";
+  btnParaTi.classList.add('activar-feed');
+  btnExplorar.classList.remove('activar-feed');
+  renderFeed();
+});
+
+  btnExplorar.addEventListener('click', function () {
+    modofeed = "explorar";
+    btnExplorar.classList.add('activar-feed');
+    btnParaTi.classList.remove('activar-feed');
+    renderFeed();
+});
+
+
+function cargarEventos() {
+  const datosGuardados = localStorage.getItem('eventos');
+
+  if (datosGuardados) {
+    const eventosPlanos = JSON.parse(datosGuardados);
+
+    eventosPlanos.forEach(function (eventoPlano) {
+      const eventoReconstruido = new Evento(
+        eventoPlano.Titulo,
+        eventoPlano.Categoria,
+        eventoPlano.Ubicacion,
+        eventoPlano.Descripcion,
+        eventoPlano.CuposTotales,
+        eventoPlano.CreadoPor
+      );
+
+      // El constructor arranca likes/comentarios/cuposOcupados en 0,
+      // así que hay que restaurar los valores reales que ya tenía:
+      eventoReconstruido.CuposOcupados = eventoPlano.CuposOcupados;
+      eventoReconstruido.likes = eventoPlano.likes;
+      eventoReconstruido.comentarios = eventoPlano.comentarios;
+      eventoReconstruido.likesUsuarios = eventoPlano.likesUsuarios || [];
+      eventoReconstruido.asistentes = eventoPlano.asistentes || [];
+      eventoReconstruido.CreadoPor = eventoPlano.CreadoPor || null;
+
+      eventos.push(eventoReconstruido);
+    });
+  }
+}
+function guardarEventos() {
+  localStorage.setItem('eventos', JSON.stringify(eventos));
+}
+function mostrarToast(mensaje, tipo) {
+  const toastContainer = document.getElementById('toastContainer');
+
+  const toast = document.createElement('div');
+  toast.className = 'toast' + (tipo === 'error' ? ' error' : '');
+  toast.textContent = mensaje;
+
+  toastContainer.appendChild(toast);
+
+  // Truco: esperamos un pelín antes de agregar "mostrar",
+  // para que la transición de CSS alcance a animarse
+  setTimeout(function () {
+    toast.classList.add('mostrar');
+  }, 10);
+
+  // Después de 3 segundos, lo ocultamos y lo eliminamos del DOM
+  setTimeout(function () {
+    toast.classList.remove('mostrar');
+    setTimeout(function () {
+      toast.remove();
+    }, 300); // le damos tiempo a que termine la animación de salida
+  }, 3000);
+}
+
 // Formulario Crear Evento
 const form = document.getElementById('formEvento');
 
@@ -45,11 +145,19 @@ form.addEventListener('submit', function (e) {
   const descripcion = document.getElementById('fDescripcion').value;
   const cupos = document.getElementById('fCupos').value;
 
-  const nuevoEvento = new Evento(titulo, categoria, ubicacion, descripcion, cupos);
+  if(Number(cupos)<=0){
+    
+    mostrarToast('El número de cupos debe ser mayor a 0', 'error');
+    return;
+  }
+
+  const nuevoEvento = new Evento(titulo, categoria, ubicacion, descripcion, cupos,usuarioActual? usuarioActual.correo :null);
   eventos.push(nuevoEvento);
 
   renderFeed();
-  form.reset();
+
+  guardarEventos();
+  overlayCrear.style.display='none';
 });
 
 // Feed
@@ -58,23 +166,36 @@ const feedContainer = document.querySelector('.feed');
 function renderFeed() {
   feedContainer.innerHTML = '';
 
+  let eventosBase=eventos;
+
+  if(modofeed==="para ti"&& usuarioActual){
+    eventosBase=eventos.filter(function(evento){
+      return usuarioActual.intereses.includes(evento.Categoria);
+  });
+}
+
   const eventosFiltrados = categoriaActiva === "todos"
-    ? eventos
-    : eventos.filter(function (evento) {
+    ? eventosBase
+    : eventosBase.filter(function (evento) {
         return evento.Categoria === categoriaActiva;
       });
 
   eventosFiltrados.forEach(function (evento) {
     const indexReal = eventos.indexOf(evento);
+    const cuposDisponibles= evento.CuposTotales - evento.CuposOcupados;
+    const estaLleno= cuposDisponibles <=0;
 
-    const cardHTML = `
+    const cardHTML = `        
       <article class="card">
         <h2 class="card-title">${evento.Titulo}</h2>
         <p class="card-meta">📍 ${evento.Ubicacion} · ${evento.Categoria}</p>
         <p class="card-meta">${evento.Descripcion}</p>
-        <p class="card-cupos">${evento.CuposTotales} cupos totales</p>
+        <p class="card-cupos">Total de cupos para completar el parche:${evento.CuposTotales}</p>
+        <p class= "card-cupos">Cupos Disponibles: ${cuposDisponibles}</p>
+        <button class="btn-unirse" data-index="${indexReal}" ${estaLleno ? 'disabled' :''}>
+          ${estaLleno ? 'Cupo LLeno' : 'Unirse al evento🙋'}
+        </button>
         <button class="btn-like" data-index="${indexReal}">❤️<span>${evento.likes}</span></button>
-
         <div class="comentarios">
           ${evento.comentarios.map(function (c) { return '<p class="comentario">💬 ' + c + '</p>'; }).join('')}
         </div>
@@ -91,11 +212,22 @@ function renderFeed() {
 
 feedContainer.addEventListener('click', function (e) {
   if (e.target.closest('.btn-like')) {
-    const boton = e.target.closest('.btn-like');
-    const index = boton.dataset.index;
-    eventos[index].DarLike();
-    renderFeed();
+  if (!usuarioActual) {
+    mostrarToast('Debes iniciar sesión para dar like.', 'error');
+    return;
   }
+
+  const boton = e.target.closest('.btn-like');
+  const index = boton.dataset.index;
+  const sePudo = eventos[index].DarLike(usuarioActual.correo);
+
+  if (!sePudo) {
+    mostrarToast('Ya le diste like a este evento.', 'error');
+  }
+
+  renderFeed();
+  guardarEventos();
+}
 
   if (e.target.closest('.btn-comentar')) {
     const boton = e.target.closest('.btn-comentar');
@@ -105,10 +237,34 @@ feedContainer.addEventListener('click', function (e) {
 
     if (texto !== '') {
       eventos[index].comentarios.push(texto);
-      renderFeed();
     }
+
+  renderFeed(); 
+  guardarEventos();
+
+}
+
+  if(e.target.closest('.btn-unirse')){
+  if (!usuarioActual) {
+    mostrarToast('Debes iniciar sesión para unirte.', 'error');
+    return;
   }
-});
+
+  const boton = e.target.closest('.btn-unirse');
+  const index = boton.dataset.index;
+  const resultado = eventos[index].unirse(usuarioActual.correo);
+
+  if (resultado === true) {
+    mostrarToast('¡Quedaste en el parche! 🎉');
+  } else if (resultado === 'ya_unido') {
+    mostrarToast('Ya estás en este parche.', 'error');
+  } else {
+    mostrarToast('Ya no hay cupos disponibles.', 'error');
+  }
+
+  renderFeed();
+  guardarEventos();
+}});
 
 // Filtra categorias
 const categoriesNav = document.querySelector('.categories');
@@ -129,11 +285,16 @@ authSection.style.display = 'none'; // arranca oculto
 btnUsuario.addEventListener('click', function () {
   const estaVisible = authSection.style.display === 'block';
   authSection.style.display = estaVisible ? 'none' : 'block';
+
+    if (!estaVisible) {
+     authSection.scrollIntoView({behavior: 'smooth'});
+  }
 });
 const authTabs = document.querySelector('.auth-tabs');
 const campoNombre = document.getElementById('aNombre');
 const btnAuthSubmit = document.getElementById('btnAuthSubmit');
 const formAuth = document.getElementById('formAuth');
+const camposIntereses = document.getElementById('camposIntereses');
 
 authTabs.addEventListener('click', function (e) {
   const boton = e.target.closest('.auth-tab');
@@ -148,9 +309,11 @@ authTabs.addEventListener('click', function (e) {
 
   if (modoAuth === 'registro') {
     campoNombre.style.display = 'block';
+    camposIntereses.style.display = 'block';
     btnAuthSubmit.textContent = 'Registrarme';
   } else {
     campoNombre.style.display = 'none';
+    camposIntereses.style.display = 'none';
     btnAuthSubmit.textContent = 'Iniciar sesión';
   }
 });
@@ -168,7 +331,7 @@ formAuth.addEventListener('submit', function (e) {
     usuarios.push(nuevoUsuario);
     usuarioActual = nuevoUsuario;
 
-    alert('¡Cuenta creada! Bienvenido, ' + nombre);
+    mostrarToast('¡Cuenta creada! Bienvenido, ' + nombre);
 
   } else {
     const encontrado = usuarios.find(function (u) {
@@ -177,9 +340,9 @@ formAuth.addEventListener('submit', function (e) {
 
     if (encontrado) {
       usuarioActual = encontrado;
-      alert('¡Bienvenido de nuevo, ' + encontrado.nombre + '!');
+      mostrarToast('¡Bienvenido de nuevo, ' + encontrado.nombre + '!');
     } else {
-      alert('Correo o contraseña incorrectos.');
+      mostrarToast('Correo o contraseña incorrectos.', 'error');
     }
   }
 
@@ -203,4 +366,5 @@ btnCrearEvento.addEventListener('click', function () {
 btnCerrarCrear.addEventListener('click', function () {
   overlayCrear.style.display = 'none';
 });
+cargarEventos();
 renderFeed();

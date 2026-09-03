@@ -1,0 +1,226 @@
+* { box-sizing: border-box; } 
+
+body {
+  margin: 0;
+  font-family:'Trebuchet MS', Arial, sans-serif ; /*  tipografía */
+  background-color: #000202; /*Fondo de la página */
+  color: #fffcfc; /* Color de la letra*/
+}
+header {
+  padding: 16px;
+}
+
+.Princi {
+    font-family: 'pacifico',cursive;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -2px;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.logo h1 {
+    margin:0;
+}
+/* ============================================
+   CATEGORÍAS (chips)
+   ============================================ */
+.categories {
+  display: flex;       /* pone los botones en fila, uno al lado del otro */
+  gap: 10px;             /* espacio entre cada chip */
+  padding: 50px 10px 10px;
+}
+.chip {
+  font-family: fantasy;
+  padding: 8px 14px;
+  border: 1px solid #ebe3e3;
+  border-radius: 20px; /* qué tan redondeadas son las esquinas */
+  background: none;
+  cursor: pointer;
+  color: #f5eff5;
+  transition: 0,5 ease;
+}
+
+.chip:Hover{
+  border-color:#e40808;
+  color: #da05da;
+}
+
+
+/* ============================================
+   FEED Y CARDS
+   ============================================ */
+.feed {
+    display: grid;                                  /* cambia de columna a cuadrícula */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 10px 16px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.card {
+  width: fit-content;
+  padding: 18px;
+  border: 2px solid #bb0000;
+  margin: 15px;
+  border-radius: 14px;
+  background-color: gray;
+  transition: transform 0.2s ease, border-color 0.2s ease; 
+}
+
+.card:hover {
+  transform: translateY(-3px);   /* 👈 nuevo: la card "flota" un poco al pasar el mouse */
+  border-color: #4200f7;
+}
+
+.card-title {
+  font-size: 18px;
+  color: #f5f1f5;
+  margin-bottom: 4px;
+  
+}
+
+.card-meta {
+  font-size: 14px;
+  color: #807a7a00;
+  margin-bottom: 8px;
+}
+
+.card-cupos {
+  font-size: 14px;
+  font-weight: bold;
+  color: #4200f7;
+}
+
+.grid { 
+  width: min(930px, 100%); 
+  margin: 15px auto; 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+  gap: 10px; 
+} 
+/*Formularios*/
+.crear-evento {
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 16px;
+  border: 1px solid #e60d0d;
+  border-radius: 12px;
+  background-color: #0f0f0f;
+}
+
+.crear-evento input,
+.crear-evento select,
+.crear-evento button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e40808;
+  background-color: #0f0f0f;
+  color: #f5f1f5;
+}
+.crear-evento button[type="submit"] {
+  background-color: #0c0c0c;   /* 👈 nuevo: el botón de publicar destaca como acción principal */
+  color: #fffcfc;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s ease;
+}
+.crear-evento button[type="submit"]:hover {
+  background-color: #0b19da;
+}
+.btn-like {
+    background-color: #010002;   /* 👈 corregido: ya no es blanco, combina con el fondo oscuro */
+    color: #fffcfc;
+    border: 1px solid #da6f0b;
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-like:hover {
+    background-color: #e60d0d;
+    border-color: #e60d0d;
+}
+
+.lindo{
+   width: 150px;
+  padding: 18px;
+  border: 2px solid #0f0f0f;
+  margin: 10px;
+  border-radius: 10px;
+}
+.fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--rosa), var(--morado));
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(255, 79, 163, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.fab:hover {
+  transform: scale(1.08);
+}
+
+/* ============ OVERLAY / MODAL ============ */
+.overlay-crear {
+  position: fixed;
+  inset: 0; /* equivale a top/left/right/bottom: 0 */
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.overlay-crear .crear-evento {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--borde);
+  max-width: 400px;
+  width: 90%;
+}
+
+.btn-cerrar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+.btn-usuario {
+  background: var(--surface);
+  border: 1px solid var(--borde);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+footer { text-align: center; padding: 20px; color: #f86502; }

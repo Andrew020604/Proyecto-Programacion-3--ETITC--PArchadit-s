@@ -1,0 +1,232 @@
+/* ============================================
+   VARIABLES DE DISEÑO
+   Cambia estos valores y se actualiza todo el sitio
+   ============================================ */
+:root {
+  --bg: #0a0a0d;
+  --surface: #17171c;
+  --text: #f5f5f5;
+  --text-muted: #a3a3ab;
+  --accent: #ff5c33;       /* naranja/rojo principal */
+  --accent-hover: #ff7a52;
+  --border: #2a2a30;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.Princi {
+  font-family: 'Pacifico', cursive;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.logo img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* ============================================
+   CATEGORÍAS (chips)
+   ============================================ */
+.categories {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  grid-auto-flow: column;
+  gap: 10px;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.chip {
+  padding: 9px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0a0a0d;
+}
+
+/* ============================================
+   FEED Y CARDS
+   ============================================ */
+.feed {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px 20px;
+}
+
+.card {
+  width: fit-content;
+background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+
+.card-title {
+  font-size: 19px;
+  margin: 0 0 6px;
+  color: var(--text);
+}
+
+.card-meta {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+
+.card-cupos {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--accent);
+  margin: 0 0 12px;
+}
+
+.btn-like {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.btn-like:hover {
+  border-color: var(--accent);
+  background: rgba(255, 92, 51, 0.1);
+}
+
+/* ============================================
+   RESPONSIVE: tablet/PC
+   ============================================ */
+@media (min-width: 768px) {
+  .feed {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+}
+
+/* ============================================
+   FORMULARIO CREAR EVENTO
+   ============================================ */
+.crear-evento {
+  max-width: 420px;
+  margin: 30px auto;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.crear-evento h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.crear-evento input,
+.crear-evento select,
+.crear-evento textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 11px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+}
+
+.crear-evento input:focus,
+.crear-evento select:focus,
+.crear-evento textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.crear-evento button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #0a0a0d;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.crear-evento button[type="submit"]:hover {
+  background: var(--accent-hover);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-muted);
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}

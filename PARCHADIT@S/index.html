@@ -15,8 +15,6 @@
     </div>
     <nav>
       <button id="btnUsuario" class="btn-usuario">👤 Iniciar sesión</button>
-      <button>Para ti</button>
-      <button>Explorar - Cerca de ti</button>
     </nav>
   </header>
 
@@ -37,6 +35,13 @@
     <button class="chip" data-categoria="sal de esa rutina">Sal De Esa Rutina</button>
     <button class="chip" data-categoria="ferias/expocisiones">Ferias/Expocisiones</button>
   </nav>
+
+  <nav>
+    <button id="btnParaTi">Para Ti</button>
+    <button id="btnExplorar" class="activar-feed">Explorar</button>
+  </nav>
+
+
   <main class="feed">
 
  
@@ -45,6 +50,7 @@
     <section class="crear-evento">
     <button type ="button" id="btnCerrarCrear" class="btn-cerrar">X</button>
     <h2>Crea tu parche</h2>
+
     <form id="formEvento">
       <input type="text" id="fTitulo" placeholder="Título del evento" required>
 
@@ -67,15 +73,14 @@
 
       <input type="text" id="fUbicacion" placeholder="Ubicación" required>
       <input type="text" id="fDescripcion" placeholder="Descripcion" required>
-      <input type="number" id="fCupos" placeholder="Cupos totales" optional>
+      <input type="number" id="fCupos" placeholder="Cupos totales" required>
 
       <button type="submit">Publicar</button>
       </form>   
     </section> 
       </div>
 <button id="btnCrearEvento" class="fab">+</button>
-  
-<section class="auth">
+  <section class="auth">
   <div class="auth-tabs">
     <button type="button" class="auth-tab active" data-modo="login">Iniciar sesión</button>
     <button type="button" class="auth-tab" data-modo="registro">Registrarme</button>
@@ -85,6 +90,26 @@
     <input type="text" id="aNombre" placeholder="Nombre" style="display:none;">
     <input type="text" id="aCorreo" placeholder="Correo" required>
     <input type="password" id="aContrasena" placeholder="Contraseña" required>
+
+    <div id="camposIntereses" style="display:none;">
+      <p class="label-intereses">Elige tus planes favoritos:</p>
+      <div class="chips-intereses">
+        <label><input type="checkbox" value="deportes"> Deportes</label>
+        <label><input type="checkbox" value="conciertos"> Conciertos</label>
+        <label><input type="checkbox" value="al aire libre"> Al Aire Libre</label>
+        <label><input type="checkbox" value="severa gurbia"> Severa Gurbia</label>
+        <label><input type="checkbox" value="dominguero"> Dominguero</label>
+        <label><input type="checkbox" value="zonas sociales"> Zona Sociales</label>
+        <label><input type="checkbox" value="vamos pa la fiesta"> Vamos pa la fiesta</label>
+        <label><input type="checkbox" value="ja ja ja"> JA JA JA</label>
+        <label><input type="checkbox" value="cine teatro"> Cine/Teatro</label>
+        <label><input type="checkbox" value="museos"> Museos</label>
+        <label><input type="checkbox" value="pa comer helado"> Pa Comer Helado</label>
+        <label><input type="checkbox" value="sal de esa rutina"> Sal De Esa Rutina</label>
+        <label><input type="checkbox" value="ferias/expocisiones"> Ferias/Expocisiones</label>
+      </div>
+    </div>
+
     <button type="submit" id="btnAuthSubmit">Iniciar sesión</button>
   </form>
 </section>
@@ -93,6 +118,7 @@
 
   
     <footer id="card">PARCHADIT@S<br>By: Ivan Gonzalez S6B</footer>
+    <div id="toastContainer" class="toast-container"></div>
     <script src="colosal.js"></script>
 </body>
 </html>
