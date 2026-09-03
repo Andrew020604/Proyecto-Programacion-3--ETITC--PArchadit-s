@@ -16,7 +16,7 @@ class Evento {
 
 DarLike(correo) {
     if (this.likesUsuarios.includes(correo)) {
-      return false;   // ya había dado like
+      return false;   
     }
     this.likes++;
     this.likesUsuarios.push(correo);
@@ -25,14 +25,14 @@ DarLike(correo) {
 
   unirse(correo) {
     if (this.asistentes.includes(correo)) {
-      return 'ya_unido';   // ya estaba adentro
+      return 'ya_unido'; 
     }
     if (this.CuposOcupados < this.CuposTotales) {
       this.CuposOcupados++;
       this.asistentes.push(correo);
       return true;
     }
-    return false;   // no hay cupo
+    return false;   
   }
 }
 class Usuario {
@@ -93,8 +93,7 @@ function cargarEventos() {
         eventoPlano.CreadoPor
       );
 
-      // El constructor arranca likes/comentarios/cuposOcupados en 0,
-      // así que hay que restaurar los valores reales que ya tenía:
+   
       eventoReconstruido.CuposOcupados = eventoPlano.CuposOcupados;
       eventoReconstruido.likes = eventoPlano.likes;
       eventoReconstruido.comentarios = eventoPlano.comentarios;
@@ -118,18 +117,17 @@ function mostrarToast(mensaje, tipo) {
 
   toastContainer.appendChild(toast);
 
-  // Truco: esperamos un pelín antes de agregar "mostrar",
-  // para que la transición de CSS alcance a animarse
+  
   setTimeout(function () {
     toast.classList.add('mostrar');
   }, 10);
 
-  // Después de 3 segundos, lo ocultamos y lo eliminamos del DOM
+  
   setTimeout(function () {
     toast.classList.remove('mostrar');
     setTimeout(function () {
       toast.remove();
-    }, 300); // le damos tiempo a que termine la animación de salida
+    }, 300); 
   }, 3000);
 }
 
