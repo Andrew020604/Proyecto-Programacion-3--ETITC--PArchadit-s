@@ -16,7 +16,7 @@ class Evento {
 
 DarLike(correo) {
     if (this.likesUsuarios.includes(correo)) {
-      return false;   
+      return false;
     }
     this.likes++;
     this.likesUsuarios.push(correo);
@@ -25,7 +25,7 @@ DarLike(correo) {
 
   unirse(correo) {
     if (this.asistentes.includes(correo)) {
-      return 'ya_unido'; 
+      return 'ya_unido';   
     }
     if (this.CuposOcupados < this.CuposTotales) {
       this.CuposOcupados++;
@@ -77,6 +77,29 @@ btnParaTi.addEventListener('click',function(){
 });
 
 
+function guardarUsuarios() {
+  localStorage.setItem('usuarios', JSON.stringify(usuarios));
+}
+
+function cargarUsuarios() {
+  const datosGuardados = localStorage.getItem('usuarios');
+
+  if (datosGuardados) {
+    const usuariosPlanos = JSON.parse(datosGuardados);
+
+    usuariosPlanos.forEach(function (usuarioPlano) {
+      const usuarioReconstruido = new Usuario(
+        usuarioPlano.nombre,
+        usuarioPlano.correo,
+        usuarioPlano.contrasena
+      );
+      usuarioReconstruido.intereses = usuarioPlano.intereses || [];
+
+      usuarios.push(usuarioReconstruido);
+    });
+  }
+}
+
 function cargarEventos() {
   const datosGuardados = localStorage.getItem('eventos');
 
@@ -93,7 +116,7 @@ function cargarEventos() {
         eventoPlano.CreadoPor
       );
 
-   
+  
       eventoReconstruido.CuposOcupados = eventoPlano.CuposOcupados;
       eventoReconstruido.likes = eventoPlano.likes;
       eventoReconstruido.comentarios = eventoPlano.comentarios;
@@ -117,12 +140,10 @@ function mostrarToast(mensaje, tipo) {
 
   toastContainer.appendChild(toast);
 
-  
   setTimeout(function () {
     toast.classList.add('mostrar');
   }, 10);
 
-  
   setTimeout(function () {
     toast.classList.remove('mostrar');
     setTimeout(function () {
@@ -288,6 +309,21 @@ btnUsuario.addEventListener('click', function () {
      authSection.scrollIntoView({behavior: 'smooth'});
   }
 });
+
+const btnCerrarSesion = document.getElementById('btnCerrarSesion');
+
+  btnCerrarSesion.addEventListener('click', function () {
+    usuarioActual = null;
+    btnUsuario.textContent = '👤 Iniciar sesión';
+    btnCerrarSesion.style.display = 'none';
+    mostrarToast('Cerraste sesión.');
+
+  modofeed = "explorar";
+  btnExplorar.classList.add('activar-feed');
+  btnParaTi.classList.remove('activar-feed');
+
+  renderFeed();
+});
 const authTabs = document.querySelector('.auth-tabs');
 const campoNombre = document.getElementById('aNombre');
 const btnAuthSubmit = document.getElementById('btnAuthSubmit');
@@ -325,9 +361,18 @@ formAuth.addEventListener('submit', function (e) {
   if (modoAuth === 'registro') {
     const nombre = document.getElementById('aNombre').value;
 
+  const checkboxesMarcados = document.querySelectorAll('#camposIntereses input:checked');
+  const interesesElegidos = [];
+  checkboxesMarcados.forEach(function (chk) {
+    interesesElegidos.push(chk.value);
+  });
+
     const nuevoUsuario = new Usuario(nombre, correo, contrasena);
+    nuevoUsuario.intereses = interesesElegidos;
+    
     usuarios.push(nuevoUsuario);
     usuarioActual = nuevoUsuario;
+    guardarUsuarios();
 
     mostrarToast('¡Cuenta creada! Bienvenido, ' + nombre);
 
@@ -347,6 +392,7 @@ formAuth.addEventListener('submit', function (e) {
   console.log('Usuario actual:', usuarioActual);
    if (usuarioActual) {
     btnUsuario.textContent = '👤 ' + usuarioActual.nombre;
+     btnCerrarSesion.style.display = 'inline-block'; 
     authSection.style.display = 'none';
   }
   formAuth.reset();
@@ -364,5 +410,6 @@ btnCrearEvento.addEventListener('click', function () {
 btnCerrarCrear.addEventListener('click', function () {
   overlayCrear.style.display = 'none';
 });
+cargarUsuarios();
 cargarEventos();
 renderFeed();

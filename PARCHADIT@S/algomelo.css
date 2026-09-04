@@ -74,9 +74,9 @@ header nav button:hover {
 /*Categorias y chips*/
 .categories {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   padding: 30px 16px 10px;
-  overflow-x: auto;
 }
 
 .chip {
