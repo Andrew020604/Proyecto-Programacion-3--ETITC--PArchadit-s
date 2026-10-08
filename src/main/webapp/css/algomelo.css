@@ -1,0 +1,160 @@
+/* ===== PARCHADIT@S · algomelo.css ===== */
+
+/* ---------- Base ---------- */
+:root {
+  --bg: #0f0a1a; --surface: #1c1430; --text: #f5f0fa; --text-muted: #b8a9d9;
+  --rosa: #ff4fa3; --morado: #9b5de5; --borde: #2e2447;
+  --degradado: linear-gradient(135deg, var(--rosa), var(--morado));
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Trebuchet MS', Arial, sans-serif; background: var(--bg); color: var(--text); }
+.oculto { display: none !important; }
+
+/* ---------- Encabezado y menú ---------- */
+header { display: flex; align-items: center; justify-content: space-between; padding: 16px; }
+header nav, .logo { display: flex; align-items: center; gap: 10px; }
+.logo img { width: 70px; height: 70px; object-fit: contain; border-radius: 50%; }
+.Princi {
+  margin: 0; font-family: 'Pacifico', cursive; font-size: 42px; font-weight: 800; letter-spacing: -2px;
+  background: linear-gradient(90deg, var(--rosa), var(--morado));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.btn-usuario {
+  display: inline-block; padding: 8px 14px; background: var(--surface); border: 1px solid var(--borde);
+  border-radius: 999px; color: var(--text); text-decoration: none; cursor: pointer; transition: .2s ease;
+}
+.btn-usuario:hover { border-color: var(--rosa); }
+
+/* ---------- Categorías y pestañas ---------- */
+.categories { display: flex; flex-wrap: wrap; gap: 10px; padding: 30px 16px 10px; }
+.chip {
+  padding: 8px 16px; background: var(--surface); border: 1px solid var(--borde); border-radius: 20px;
+  color: var(--text-muted); font-family: inherit; white-space: nowrap; cursor: pointer; transition: .2s ease;
+}
+.chip:hover { border-color: var(--rosa); color: var(--text); }
+.chip.active { background: var(--degradado); border-color: transparent; color: white; }
+
+nav:has(#btnParaTi) { display: flex; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--borde); }
+#btnParaTi, #btnExplorar {
+  position: relative; padding: 8px 4px; background: none; border: none; color: var(--text-muted);
+  font-size: 15px; font-weight: 600; cursor: pointer; transition: .2s ease;
+}
+:is(#btnParaTi, #btnExplorar):is(:hover, .activar-feed) { color: var(--text); }
+.activar-feed::after {
+  content: ''; position: absolute; inset: auto 0 -1px 0; height: 3px; border-radius: 3px;
+  background: linear-gradient(90deg, var(--rosa), var(--morado));
+}
+
+/* ---------- Feed y tarjetas ---------- */
+.feed {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;
+  max-width: 900px; margin: 0 auto; padding: 10px 16px 100px;
+}
+.feed-vacio { grid-column: 1 / -1; text-align: center; color: var(--text-muted); }
+.card {
+  padding: 18px; background: var(--surface); border: 1px solid var(--borde); border-radius: 14px;
+  transition: transform .2s ease, border-color .2s ease;
+}
+.card:hover { transform: translateY(-3px); border-color: var(--rosa); }
+.card-title { margin-bottom: 4px; font-size: 18px; color: var(--text); }
+.card-meta { margin-bottom: 8px; font-size: 14px; color: var(--text-muted); }
+.card-cupos { font-size: 14px; font-weight: bold; color: var(--morado); }
+.etiqueta-parati { margin-left: 6px; font-size: 12px; color: var(--rosa); }
+
+/* ---------- Botones de la tarjeta ---------- */
+.acciones { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.btn-like, .btn-unirse { padding: 8px 15px; border-radius: 20px; font-size: 15px; cursor: pointer; transition: .2s ease; }
+
+.btn-like { background: var(--bg); border: 1px solid var(--borde); color: var(--text); }
+.btn-like:hover { background: var(--rosa); border-color: var(--rosa); }
+.btn-like.activo { border-color: var(--rosa); color: var(--rosa); }
+.btn-like.activo:hover { color: white; }
+
+.btn-unirse, .btn-comentar { background: var(--morado); border: none; color: white; cursor: pointer; transition: .2s ease; }
+.btn-unirse:hover, .btn-comentar:hover { background: var(--rosa); }
+.btn-unirse.activo { background: var(--bg); border: 1px solid var(--rosa); color: var(--rosa); }
+
+/* ---------- Comentarios ---------- */
+.comentarios { margin: 10px 0; }
+.comentario { margin-bottom: 4px; padding: 6px 10px; background: var(--bg); border-radius: 8px; font-size: 13px; color: var(--text-muted); }
+.agregar-comentario { display: flex; gap: 6px; margin-top: 8px; }
+.input-comentario {
+  flex: 1; min-width: 0; padding: 8px; background: var(--bg); border: 1px solid var(--borde);
+  border-radius: 8px; color: var(--text);
+}
+.btn-comentar { padding: 8px 12px; border-radius: 8px; }
+
+/* ---------- Formularios (crear parche y acceso) ---------- */
+.crear-evento, .auth {
+  max-width: 400px; margin: 30px auto; padding: 20px; background: var(--surface);
+  border: 1px solid var(--borde); border-radius: 14px;
+}
+.auth { margin: 20px auto; }
+.crear-evento h2 { margin-top: 0; }
+
+.crear-evento :is(input, select), .auth input:not([type="checkbox"]) {
+  display: block; width: 100%; margin-bottom: 10px; padding: 10px; background: var(--bg);
+  border: 1px solid var(--borde); border-radius: 8px; color: var(--text); font-family: inherit;
+}
+.crear-evento :is(input, select):focus, .auth input:focus { outline: none; border-color: var(--rosa); }
+
+.crear-evento button[type="submit"], .auth button[type="submit"] {
+  width: 100%; padding: 10px; background: var(--degradado); border: none; border-radius: 8px;
+  color: white; font-family: inherit; font-weight: bold; cursor: pointer; transition: .2s ease;
+}
+.crear-evento button[type="submit"]:hover, .auth button[type="submit"]:hover { opacity: .9; }
+
+/* ---------- Registro / ingreso ---------- */
+.auth-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.auth-tab {
+  flex: 1; padding: 10px; background: var(--bg); border: 1px solid var(--borde); border-radius: 8px;
+  color: var(--text-muted); cursor: pointer; transition: .2s ease;
+}
+.auth-tab.active { background: var(--degradado); border-color: transparent; color: white; }
+
+.label-intereses { margin: 12px 0 8px; font-size: 14px; color: var(--text-muted); }
+.chips-intereses { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.chips-intereses label {
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--bg);
+  border: 1px solid var(--borde); border-radius: 8px; color: var(--text); cursor: pointer; transition: .2s ease;
+}
+.chips-intereses label:hover { border-color: var(--rosa); }
+.chips-intereses input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--rosa); cursor: pointer; }
+
+/* ---------- Botón flotante y ventana de crear ---------- */
+.fab {
+  position: fixed; bottom: 24px; right: 24px; z-index: 50; width: 58px; height: 58px;
+  background: var(--degradado); border: none; border-radius: 50%; color: white; font-size: 28px;
+  box-shadow: 0 4px 16px rgba(255, 79, 163, .4); cursor: pointer; transition: transform .2s ease;
+}
+.fab:hover { transform: scale(1.08); }
+
+.overlay-crear {
+  position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, .6);
+}
+.overlay-crear .crear-evento { position: relative; width: 90%; }
+
+.btn-cerrar {
+  position: absolute; top: 12px; right: 12px; display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; padding: 0; background: var(--bg); border: 1px solid var(--borde);
+  border-radius: 50%; color: var(--text-muted); font-size: 16px; font-weight: bold; cursor: pointer; transition: .2s ease;
+}
+.btn-cerrar:hover { border-color: var(--rosa); color: var(--rosa); }
+
+/* ---------- Avisos (toast) ---------- */
+.toast-container {
+  position: fixed; bottom: 24px; left: 50%; z-index: 200; display: flex; flex-direction: column;
+  gap: 8px; transform: translateX(-50%);
+}
+.toast {
+  padding: 12px 20px; background: var(--surface); border: 1px solid var(--borde);
+  border-left: 4px solid var(--rosa); border-radius: 10px; color: var(--text);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .3); opacity: 0; transform: translateY(10px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+.toast.mostrar { opacity: 1; transform: translateY(0); }
+.toast.error { border-left-color: #ff4d4d; }
+
+/* ---------- Pie de página ---------- */
+footer { margin-top: 20px; padding: 24px; border-top: 1px solid var(--borde); text-align: center; color: var(--text-muted); }

@@ -1,0 +1,20 @@
+<%-- categorias.jspf: lista única de categorías, se incluye con la directiva include --%>
+<%!
+    // DECLARACIÓN: {valor interno, texto que ve la persona}
+    private static final String[][] CATEGORIAS = {
+        {"al aire libre", "Al Aire Libre"},
+        {"conciertos", "Conciertos"},
+        {"deportes", "Deportes"},
+        {"severa gurbia", "Severa Gurbia"},
+        {"dominguero", "Dominguero"},
+        {"zonas sociales", "Zonas Sociales"},
+        {"vamos pa la fiesta", "Vamos pa la fiesta"},
+        {"ja ja ja", "JA JA JA"},
+        {"cine teatro", "Cine/Teatro"},
+        {"eventos cercanos", "Eventos Cercanos"},
+        {"museos", "Museos"},
+        {"pa comer helado", "Pa Comer Helado"},
+        {"sal de esa rutina", "Sal De Esa Rutina"},
+        {"ferias/expocisiones", "Ferias/Expocisiones"}
+    };
+%>
